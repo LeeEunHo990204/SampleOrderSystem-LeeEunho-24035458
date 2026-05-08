@@ -117,11 +117,56 @@ REJECTED  재고 확인
 
 기능별 선택 화면을 표시하며, 전체 시료에 대한 요약 정보를 확인할 수 있습니다. 각 기능의 상세 명세는 링크를 참고하세요.
 
-| 메뉴 | 기능 요약 | 상세 명세 |
-|------|-----------|-----------|
-| 시료 관리 | 시료 등록, 목록 조회, 이름 검색 | [01-sample-management.md](features/01-sample-management.md) |
-| 시료 주문 | 고객 주문 접수 | [02-sample-order.md](features/02-sample-order.md) |
-| 주문 승인/거절 | 생산 라인 담당자의 승인·거절 처리 | [03-order-approval.md](features/03-order-approval.md) |
-| 모니터링 | 상태별 주문 수 및 시료별 재고 현황 | [04-monitoring.md](features/04-monitoring.md) |
-| 생산라인 조회 | 현재 생산 중인 시료 및 대기 중인 생산 큐 확인 | [05-production-line.md](features/05-production-line.md) |
-| 출고 처리 | CONFIRMED 상태 주문에 대해 출고 실행 | [06-release-processing.md](features/06-release-processing.md) |
+| 메뉴 | 기능 요약 | 기능 명세 | 설계 문서 |
+|------|-----------|-----------|-----------|
+| 시료 관리 | 시료 등록(S-NNN), 목록 조회(5개/페이지), 이름 검색 | [01-sample-management.md](features/01-sample-management.md) | [phase2](../design/phase2-sample-management.md) |
+| 시료 주문 | 고객 주문 접수, 확인 단계, ORD-YYYYMMDD-NNNN 생성 | [02-sample-order.md](features/02-sample-order.md) | [phase3](../design/phase3-sample-order.md) |
+| 주문 승인/거절 | 재고 확인·실생산량 표시 후 승인/거절 | [03-order-approval.md](features/03-order-approval.md) | [phase4](../design/phase4-order-approval.md) |
+| 모니터링 | 상태별 주문 수 + 시료별 재고 현황(잔여율 바) | [04-monitoring.md](features/04-monitoring.md) | [phase6](../design/phase6-monitoring.md) |
+| 생산라인 조회 | RUNNING 현황·프로그레스 바·대기 큐(FIFO) | [05-production-line.md](features/05-production-line.md) | [phase5](../design/phase5-production-line.md) |
+| 출고 처리 | CONFIRMED 목록 선택, 출고 처리, 처리 일시 기록 | [06-release-processing.md](features/06-release-processing.md) | [phase7](../design/phase7-release-processing.md) |
+
+---
+
+## 6. 공통 UI 규칙
+
+### ID 형식
+
+| 엔티티 | 형식 | 예시 |
+|--------|------|------|
+| 시료 ID | `S-NNN` | `S-001`, `S-012` |
+| 주문 ID | `ORD-YYYYMMDD-NNNN` | `ORD-20260416-0043` |
+
+### 서브메뉴 — 인라인 한 줄
+
+```
+ [1] 기능A    [2] 기능B    [0] 뒤로
+선택 > _
+```
+
+### 페이지네이션 — 5개 단위
+
+목록이 5개를 초과하면 5개씩 나눠 표시하고 `[N] 다음페이지` 선택을 제공합니다.
+
+### 주문 접수 확인 단계
+
+시료 주문 시 입력 내용을 표시한 뒤 `[V] 예약 접수  [N] 취소` 로 확인을 받습니다.
+
+### 상태 뱃지 색상 (ANSI)
+
+| 상태 | 색상 |
+|------|------|
+| RESERVED | Bright Cyan `\033[96m` |
+| PRODUCING | Bright Yellow `\033[93m` |
+| CONFIRMED | Bright Green `\033[92m` |
+| RELEASE | Bright Magenta `\033[95m` |
+| REJECTED | Bright Red `\033[91m` |
+
+### 프로그레스 바
+
+```
+[████████████░░░░] 72%
+```
+- 채워진 칸: `█`, 빈 칸: `░`
+- 생산 진행률(16칸), 재고 잔여율(14칸)
+- 잔여율 = `stock / (stock + 필요 수량) × 100%`
