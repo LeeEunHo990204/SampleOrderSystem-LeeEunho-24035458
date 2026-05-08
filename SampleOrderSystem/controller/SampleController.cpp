@@ -12,8 +12,14 @@ SampleController::SampleController(SampleRepository& repo, SampleView& view)
 void SampleController::Run() {
     bool running = true;
     while (running) {
-        view_.Render();
-        int choice = view_.GetMenuChoice();
+        int choice;
+        if (pendingChoice_ >= 0) {
+            choice = pendingChoice_;
+            pendingChoice_ = -1;
+        } else {
+            view_.Render();
+            choice = view_.GetMenuChoice();
+        }
         if (choice == 0) {
             running = false;
         } else {
@@ -42,7 +48,8 @@ std::vector<Sample> SampleController::searchByName(const std::string& keyword) {
     auto all = repo_.loadAll();
     std::vector<Sample> result;
     for (const auto& s : all) {
-        if (s.getName().find(keyword) != std::string::npos) {
+        if (s.getId().find(keyword) != std::string::npos ||
+            s.getName().find(keyword) != std::string::npos) {
             result.push_back(s);
         }
     }
@@ -85,7 +92,8 @@ void SampleController::onList() {
         int lastPage = (total == 0) ? 0 : (total - 1) / 5;
 
         if (page >= lastPage) {
-            view_.pause();
+            view_.showInlineMenu();
+            pendingChoice_ = view_.GetMenuChoice();
             paging = false;
         } else {
             std::string line;
@@ -106,8 +114,11 @@ void SampleController::onSearch() {
 
     if (result.empty()) {
         view_.ShowMessage("검색 결과가 없습니다.");
+        view_.showInlineMenu();
+        pendingChoice_ = view_.GetMenuChoice();
     } else {
         view_.showSampleList(result, 0);
-        view_.pause();
+        view_.showInlineMenu();
+        pendingChoice_ = view_.GetMenuChoice();
     }
 }

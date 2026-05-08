@@ -96,7 +96,9 @@ int ConsoleView::GetMenuChoice() {
 std::string ConsoleView::inputString(const std::string& prompt) {
     std::string value;
     std::cout << prompt;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    if (std::cin.peek() == '\n') {
+        std::cin.ignore();
+    }
     std::getline(std::cin, value);
     return value;
 }

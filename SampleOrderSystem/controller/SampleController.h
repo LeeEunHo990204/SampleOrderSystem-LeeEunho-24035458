@@ -26,4 +26,5 @@ private:
 
     SampleRepository& repo_;
     SampleView&       view_;
+    int pendingChoice_ = -1;  // 인라인 메뉴에서 받은 다음 선택값
 };
