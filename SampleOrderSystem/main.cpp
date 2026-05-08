@@ -47,9 +47,12 @@ int main() {
             ctrl.Run();
         } else if (choice == 2) {
             OrderController ctrl(sampleRepo, orderRepo, orderView);
+            ctrl.runOrderCreation();
+        } else if (choice == 3) {
+            OrderController ctrl(sampleRepo, orderRepo, orderView);
             ctrl.Run();
         } else {
-            // Phase 4~7: 각 Controller::Run() 으로 분기 예정
+            // Phase 5~7: 각 Controller::Run() 으로 분기 예정
             view.ShowMessage("해당 기능은 아직 구현 중입니다.");
         }
     }
