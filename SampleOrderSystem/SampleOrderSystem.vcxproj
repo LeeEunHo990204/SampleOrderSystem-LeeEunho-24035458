@@ -226,6 +226,8 @@
     <ClInclude Include="util\JsonValue.h" />
     <ClInclude Include="util\JsonParser.h" />
     <ClInclude Include="util\DataPersistence.h" />
+    <ClInclude Include="util\ProductionFormula.h" />
+    <ClInclude Include="view\ConsoleColors.h" />
     <ClInclude Include="view\ConsoleView.h" />
     <ClInclude Include="view\SampleView.h" />
     <ClInclude Include="view\OrderView.h" />

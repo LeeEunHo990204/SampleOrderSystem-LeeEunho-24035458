@@ -181,6 +181,12 @@
     <ClInclude Include="util\DataPersistence.h">
       <Filter>헤더 파일\util</Filter>
     </ClInclude>
+    <ClInclude Include="util\ProductionFormula.h">
+      <Filter>헤더 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="view\ConsoleColors.h">
+      <Filter>헤더 파일\view</Filter>
+    </ClInclude>
     <ClInclude Include="view\ConsoleView.h">
       <Filter>헤더 파일\view</Filter>
     </ClInclude>

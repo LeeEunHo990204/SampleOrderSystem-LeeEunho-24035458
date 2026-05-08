@@ -25,6 +25,8 @@ public:
 
 protected:
     static std::string currentDateTime();
+    static int  dispWidth(const std::string& s);
+    static void padTo(const std::string& text, int colWidth);
 
 private:
     void printAsciiArt() const;

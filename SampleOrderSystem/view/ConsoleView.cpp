@@ -1,14 +1,10 @@
 #include "ConsoleView.h"
+#include "ConsoleColors.h"
 #include <iostream>
 #include <limits>
 #include <ctime>
 #include <iomanip>
 #include <sstream>
-
-static const char* CYAN   = "\033[96m";
-static const char* YELLOW = "\033[93m";
-static const char* GRAY   = "\033[90m";
-static const char* RESET  = "\033[0m";
 
 std::string ConsoleView::formatNumber(int n) {
     std::string s = std::to_string(n);
@@ -135,4 +131,22 @@ void ConsoleView::pause() {
     std::cout << "\n 계속하려면 Enter 키를 누르세요...";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
+}
+
+int ConsoleView::dispWidth(const std::string& s) {
+    int w = 0;
+    for (size_t i = 0; i < s.size(); ) {
+        unsigned char c = static_cast<unsigned char>(s[i]);
+        if      (c < 0x80) { w += 1; i += 1; }
+        else if (c < 0xE0) { w += 1; i += 2; }
+        else if (c < 0xF0) { w += 2; i += 3; }
+        else               { w += 2; i += 4; }
+    }
+    return w;
+}
+
+void ConsoleView::padTo(const std::string& text, int colWidth) {
+    std::cout << text;
+    int pad = colWidth - dispWidth(text);
+    if (pad > 0) std::cout << std::string(pad, ' ');
 }

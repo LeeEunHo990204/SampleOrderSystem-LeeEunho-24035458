@@ -1,14 +1,12 @@
 // OrderController.cpp — Phase 3 + Phase 4 + Phase 5
 #include "OrderController.h"
+#include "../util/ProductionFormula.h"
 #include <algorithm>
 #include <cmath>
 #include <ctime>
 #include <sstream>
 #include <iomanip>
 
-// ---------------------------------------------------------------------------
-// 주문 ID 생성: ORD-YYYYMMDD-NNNN
-// ---------------------------------------------------------------------------
 static std::string generateOrderId(int existingCount) {
     std::time_t now = std::time(nullptr);
     std::tm t{};
@@ -25,9 +23,6 @@ static std::string generateOrderId(int existingCount) {
     return oss.str();
 }
 
-// ---------------------------------------------------------------------------
-// 생성자
-// ---------------------------------------------------------------------------
 OrderController::OrderController(SampleRepository& sampleRepo,
                                  OrderRepository&  orderRepo,
                                  ProductionQueue&  prodQueue,
@@ -36,9 +31,6 @@ OrderController::OrderController(SampleRepository& sampleRepo,
 {
 }
 
-// ---------------------------------------------------------------------------
-// Run — Phase 4: 목록 표시 → 번호 선택 → 승인/거절 루프
-// ---------------------------------------------------------------------------
 void OrderController::Run() {
     bool running = true;
     while (running) {
@@ -50,9 +42,6 @@ void OrderController::Run() {
     }
 }
 
-// ---------------------------------------------------------------------------
-// runOrderCreation — Phase 3: 시료 주문 루프
-// ---------------------------------------------------------------------------
 void OrderController::runOrderCreation() {
     bool running = true;
     while (running) {
@@ -64,9 +53,6 @@ void OrderController::runOrderCreation() {
     }
 }
 
-// ---------------------------------------------------------------------------
-// HandleInput
-// ---------------------------------------------------------------------------
 void OrderController::HandleInput(int command) {
     switch (command) {
     case 1: onApproveOrReject(); break;
@@ -76,9 +62,6 @@ void OrderController::HandleInput(int command) {
     }
 }
 
-// ---------------------------------------------------------------------------
-// 공개 메서드 — 테스트에서 직접 호출 가능
-// ---------------------------------------------------------------------------
 void OrderController::createOrder() {
     onCreateOrder();
 }
@@ -87,9 +70,6 @@ void OrderController::approveOrRejectOrder() {
     onApproveOrReject();
 }
 
-// ---------------------------------------------------------------------------
-// Phase 3: 주문 접수 처리
-// ---------------------------------------------------------------------------
 void OrderController::onCreateOrder() {
     std::string sampleId = view_.inputSampleId();
 
@@ -131,14 +111,10 @@ void OrderController::onCreateOrder() {
     view_.showOrderCreated(newOrder, sample.getName());
 }
 
-// ---------------------------------------------------------------------------
-// Phase 4: 승인/거절 통합 처리
-// ---------------------------------------------------------------------------
 void OrderController::onApproveOrReject() {
     auto orders  = orderRepo_.loadAll();
     auto samples = sampleRepo_.loadAll();
 
-    // RESERVED 필터링
     std::vector<Order> reserved;
     for (const auto& o : orders)
         if (o.getStatus() == OrderStatus::RESERVED)
@@ -175,19 +151,14 @@ void OrderController::onApproveOrReject() {
     Sample& sample   = *sampleIt;
     int stock        = sample.getStock();
     int quantity     = selectedOrder.getQuantity();
-    int shortage     = (quantity > stock) ? (quantity - stock) : 0;
-    int actualQty    = (shortage > 0)
-                       ? static_cast<int>(std::ceil(
-                             static_cast<double>(shortage)
-                             / (sample.getYieldRate() * 0.9)))
-                       : 0;
+    int shortage     = calcShortage(quantity, stock);
+    int actualQty    = calcActualQty(shortage, sample.getYieldRate());
     double totalTime = sample.getAvgProductionTime() * actualQty;
 
     view_.showOrderInfo(sample, selectedOrder, shortage, actualQty, totalTime);
 
     char confirm = view_.inputConfirm();
 
-    // orders 벡터에서 실제 수정 대상 참조
     auto orderIt = std::find_if(orders.begin(), orders.end(),
         [&selectedOrder](const Order& o) {
             return o.getId() == selectedOrder.getId();

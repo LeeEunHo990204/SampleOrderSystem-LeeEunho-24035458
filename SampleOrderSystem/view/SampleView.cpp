@@ -1,36 +1,11 @@
 // SampleView.cpp — Phase 2: 시료 관리 서브메뉴 뷰
 #include "SampleView.h"
+#include "ConsoleColors.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
 
-static const char* CYAN      = "\033[96m";
-static const char* YELLOW    = "\033[93m";
-static const char* GRAY      = "\033[90m";
-static const char* BRIGHT_RED = "\033[91m";
-static const char* RESET     = "\033[0m";
-
 static const int PAGE_SIZE = 5;
-
-// UTF-8 문자열의 터미널 표시 너비 계산 (한글 = 2칸, ASCII = 1칸)
-static int dispWidth(const std::string& s) {
-    int w = 0;
-    for (size_t i = 0; i < s.size(); ) {
-        unsigned char c = static_cast<unsigned char>(s[i]);
-        if      (c < 0x80) { w += 1; i += 1; }
-        else if (c < 0xE0) { w += 1; i += 2; }
-        else if (c < 0xF0) { w += 2; i += 3; }
-        else               { w += 2; i += 4; }
-    }
-    return w;
-}
-
-// 텍스트 출력 후 colWidth에 맞게 공백 패딩
-static void padTo(const std::string& text, int colWidth) {
-    std::cout << text;
-    int pad = colWidth - dispWidth(text);
-    if (pad > 0) std::cout << std::string(pad, ' ');
-}
 
 void SampleView::Render() {
     std::cout << "\033[2J\033[H";
@@ -76,7 +51,7 @@ void SampleView::showSampleList(const std::vector<Sample>& samples, int page) {
         const Sample& s = samples[i];
         bool zeroStock  = (s.getStock() == 0);
 
-        if (zeroStock) std::cout << BRIGHT_RED;
+        if (zeroStock) std::cout << RED;
 
         std::cout << " ";
         padTo(s.getId(), COL_ID);

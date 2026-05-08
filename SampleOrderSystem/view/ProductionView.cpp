@@ -1,5 +1,7 @@
 // ProductionView.cpp
 #include "ProductionView.h"
+#include "ConsoleColors.h"
+#include "../util/ProductionFormula.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -13,7 +15,7 @@
 void ProductionView::Render() {
     std::cout << "\n [5] 생산라인 조회  FIFO 방식\n";
     std::cout << " ================================================\n\n";
-    std::cout << " 생산라인 1개 (단일 라인)  현재 상태: \033[93m[RUNNING]\033[0m\n\n";
+    std::cout << " 생산라인 1개 (단일 라인)  현재 상태: " << YELLOW << "[RUNNING]" << RESET << "\n\n";
 }
 
 // ---------------------------------------------------------------------------
@@ -34,12 +36,8 @@ void ProductionView::showProductionStatus(const Order& current,
 
     int    stock     = curSample->getStock();
     int    qty       = current.getQuantity();
-    int    shortage  = std::max(0, qty - stock);
-    int    actualQty = (shortage > 0)
-                       ? static_cast<int>(std::ceil(
-                             static_cast<double>(shortage)
-                             / (curSample->getYieldRate() * 0.9)))
-                       : 0;
+    int    shortage  = calcShortage(qty, stock);
+    int    actualQty = calcActualQty(shortage, curSample->getYieldRate());
     double totalTime = curSample->getAvgProductionTime() * actualQty;
 
     // 진행률: productionStartedAt 기준 경과 시간으로 계산
@@ -100,11 +98,9 @@ void ProductionView::showProductionStatus(const Order& current,
             const Sample* ws = findSample(wo.getSampleId());
             if (!ws) { ++idx; continue; }
 
-            int    ws_shortage  = std::max(0, wo.getQuantity() - ws->getStock());
+            int    ws_shortage  = calcShortage(wo.getQuantity(), ws->getStock());
             int    ws_actual    = (ws_shortage > 0)
-                                  ? static_cast<int>(std::ceil(
-                                        static_cast<double>(ws_shortage)
-                                        / (ws->getYieldRate() * 0.9)))
+                                  ? calcActualQty(ws_shortage, ws->getYieldRate())
                                   : wo.getQuantity();
             double ws_time      = ws->getAvgProductionTime() * ws_actual;
             cumulativeTime     += ws_time;

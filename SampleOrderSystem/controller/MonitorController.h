@@ -19,6 +19,8 @@ protected:
 private:
     void onDashboard();
     void onStockOnly();
+    std::vector<StockInfo> buildStockList(const std::vector<Order>& orders,
+                                          const std::vector<Sample>& samples) const;
 
     SampleRepository& sampleRepo_;
     OrderRepository&  orderRepo_;

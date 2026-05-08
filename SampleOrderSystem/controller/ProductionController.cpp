@@ -1,12 +1,10 @@
 // ProductionController.cpp — Phase 5
 #include "ProductionController.h"
+#include "../util/ProductionFormula.h"
 #include <algorithm>
 #include <cmath>
 #include <ctime>
 
-// ---------------------------------------------------------------------------
-// 생성자
-// ---------------------------------------------------------------------------
 ProductionController::ProductionController(SampleRepository& sampleRepo,
                                            OrderRepository&  orderRepo,
                                            ProductionQueue&  queue,
@@ -15,9 +13,6 @@ ProductionController::ProductionController(SampleRepository& sampleRepo,
 {
 }
 
-// ---------------------------------------------------------------------------
-// Run — 조회 → 인라인 메뉴 → 입력 루프
-// ---------------------------------------------------------------------------
 void ProductionController::Run() {
     bool running = true;
     while (running) {
@@ -30,9 +25,6 @@ void ProductionController::Run() {
     }
 }
 
-// ---------------------------------------------------------------------------
-// HandleInput
-// ---------------------------------------------------------------------------
 void ProductionController::HandleInput(int command) {
     switch (command) {
     case 1: onProcessNext(); break;
@@ -42,9 +34,6 @@ void ProductionController::HandleInput(int command) {
     }
 }
 
-// ---------------------------------------------------------------------------
-// 공개 래퍼 — 테스트에서 직접 호출 가능
-// ---------------------------------------------------------------------------
 void ProductionController::processNext() {
     onProcessNext();
 }
@@ -53,9 +42,6 @@ void ProductionController::showStatus() {
     onShowStatus();
 }
 
-// ---------------------------------------------------------------------------
-// autoCompleteFinished — 생산 시간이 경과한 주문을 자동으로 CONFIRMED 처리
-// ---------------------------------------------------------------------------
 void ProductionController::autoCompleteFinished() {
     while (!queue_.empty()) {
         std::string orderId = queue_.front();
@@ -73,12 +59,8 @@ void ProductionController::autoCompleteFinished() {
         long long startTime = orderIt->getProductionStartedAt();
         if (startTime == 0) break;
 
-        int shortage  = std::max(0, orderIt->getQuantity() - sampleIt->getStock());
-        int actualQty = (shortage > 0)
-                        ? static_cast<int>(std::ceil(
-                              static_cast<double>(shortage)
-                              / (sampleIt->getYieldRate() * 0.9)))
-                        : 0;
+        int shortage        = calcShortage(orderIt->getQuantity(), sampleIt->getStock());
+        int actualQty       = calcActualQty(shortage, sampleIt->getYieldRate());
         double totalMinutes = sampleIt->getAvgProductionTime() * actualQty;
 
         long long now = static_cast<long long>(std::time(nullptr));
@@ -96,9 +78,6 @@ void ProductionController::autoCompleteFinished() {
     }
 }
 
-// ---------------------------------------------------------------------------
-// onShowStatus — 현재 큐 현황 표시
-// ---------------------------------------------------------------------------
 void ProductionController::onShowStatus() {
     autoCompleteFinished();
     if (queue_.empty()) {
@@ -110,7 +89,6 @@ void ProductionController::onShowStatus() {
     auto orders  = orderRepo_.loadAll();
     auto samples = sampleRepo_.loadAll();
 
-    // 현재 처리 중인 주문 찾기
     auto currentIt = std::find_if(orders.begin(), orders.end(),
         [&currentId](const Order& o) { return o.getId() == currentId; });
 
@@ -119,7 +97,6 @@ void ProductionController::onShowStatus() {
         return;
     }
 
-    // 대기 중인 주문 수집 (front 제외, 나머지 큐 순서대로)
     std::vector<Order> waitingOrders;
     const auto& queueRef = queue_.getQueue();
     for (std::size_t i = 1; i < queueRef.size(); ++i) {
@@ -133,9 +110,6 @@ void ProductionController::onShowStatus() {
     view_.showProductionStatus(*currentIt, waitingOrders, samples);
 }
 
-// ---------------------------------------------------------------------------
-// onProcessNext — 다음 주문 생산 처리
-// ---------------------------------------------------------------------------
 void ProductionController::onProcessNext() {
     if (queue_.empty()) {
         view_.ShowMessage("대기 중인 주문이 없습니다.");
@@ -146,7 +120,6 @@ void ProductionController::onProcessNext() {
     auto orders  = orderRepo_.loadAll();
     auto samples = sampleRepo_.loadAll();
 
-    // 주문 찾기
     auto orderIt = std::find_if(orders.begin(), orders.end(),
         [&orderId](const Order& o) { return o.getId() == orderId; });
     if (orderIt == orders.end()) {
@@ -154,7 +127,6 @@ void ProductionController::onProcessNext() {
         return;
     }
 
-    // 시료 찾기
     const std::string& sampleId = orderIt->getSampleId();
     auto sampleIt = std::find_if(samples.begin(), samples.end(),
         [&sampleId](const Sample& s) { return s.getId() == sampleId; });
@@ -163,12 +135,8 @@ void ProductionController::onProcessNext() {
         return;
     }
 
-    int shortage  = std::max(0, orderIt->getQuantity() - sampleIt->getStock());
-    int actualQty = (shortage > 0)
-                    ? static_cast<int>(std::ceil(
-                          static_cast<double>(shortage)
-                          / (sampleIt->getYieldRate() * 0.9)))
-                    : 0;
+    int shortage     = calcShortage(orderIt->getQuantity(), sampleIt->getStock());
+    int actualQty    = calcActualQty(shortage, sampleIt->getYieldRate());
     double totalTime = sampleIt->getAvgProductionTime() * actualQty;
 
     view_.showProcessingResult(*orderIt, *sampleIt, shortage, actualQty, totalTime);

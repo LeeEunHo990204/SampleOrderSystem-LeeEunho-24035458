@@ -28,6 +28,7 @@ public:
     void showInlineMenu();
 
 private:
+    void renderStockList(const std::vector<StockInfo>& stockList);
     static std::string stateLabel(StockState s);
     static std::string stateColor(StockState s);
     static std::string makeBar(int pct, int width = 14);

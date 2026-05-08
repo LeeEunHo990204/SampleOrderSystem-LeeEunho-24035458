@@ -1,16 +1,9 @@
 // OrderView.cpp — Phase 3 + Phase 4
 #include "OrderView.h"
+#include "ConsoleColors.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-
-static const char* GREEN   = "\033[92m";
-static const char* YELLOW  = "\033[93m";
-static const char* RED     = "\033[91m";
-static const char* MAGENTA = "\033[95m";
-static const char* CYAN    = "\033[96m";
-static const char* GRAY    = "\033[90m";
-static const char* RESET   = "\033[0m";
 
 // ---------------------------------------------------------------------------
 // 상태 뱃지 색상 반환

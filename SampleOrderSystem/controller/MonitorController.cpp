@@ -33,22 +33,10 @@ void MonitorController::HandleInput(int command) {
     }
 }
 
-void MonitorController::onDashboard() {
-    auto orders  = orderRepo_.loadAll();
-    auto samples = sampleRepo_.loadAll();
-
-    OrderSummary summary;
-    for (const auto& o : orders) {
-        switch (o.getStatus()) {
-        case OrderStatus::RESERVED:  summary.reserved++;  break;
-        case OrderStatus::PRODUCING: summary.producing++; break;
-        case OrderStatus::CONFIRMED: summary.confirmed++; break;
-        case OrderStatus::RELEASE:   summary.release++;   break;
-        case OrderStatus::REJECTED:
-        default: break;
-        }
-    }
-
+std::vector<StockInfo> MonitorController::buildStockList(
+    const std::vector<Order>& orders,
+    const std::vector<Sample>& samples) const
+{
     std::vector<StockInfo> stockList;
     for (const auto& s : samples) {
         int needed = 0;
@@ -83,48 +71,33 @@ void MonitorController::onDashboard() {
         info.yieldPct   = yieldPct;
         stockList.push_back(info);
     }
+    return stockList;
+}
+
+void MonitorController::onDashboard() {
+    auto orders    = orderRepo_.loadAll();
+    auto samples   = sampleRepo_.loadAll();
+    auto stockList = buildStockList(orders, samples);
+
+    OrderSummary summary;
+    for (const auto& o : orders) {
+        switch (o.getStatus()) {
+        case OrderStatus::RESERVED:  summary.reserved++;  break;
+        case OrderStatus::PRODUCING: summary.producing++; break;
+        case OrderStatus::CONFIRMED: summary.confirmed++; break;
+        case OrderStatus::RELEASE:   summary.release++;   break;
+        case OrderStatus::REJECTED:
+        default: break;
+        }
+    }
 
     view_.showDashboard(summary, stockList);
 }
 
 void MonitorController::onStockOnly() {
-    auto orders  = orderRepo_.loadAll();
-    auto samples = sampleRepo_.loadAll();
-
-    std::vector<StockInfo> stockList;
-    for (const auto& s : samples) {
-        int needed = 0;
-        for (const auto& o : orders) {
-            if (o.getSampleId() == s.getId()) {
-                OrderStatus st = o.getStatus();
-                if (st == OrderStatus::RESERVED || st == OrderStatus::PRODUCING)
-                    needed += o.getQuantity();
-            }
-        }
-
-        StockState state;
-        if (s.getStock() == 0)
-            state = StockState::DEPLETED;
-        else if (s.getStock() < needed)
-            state = StockState::SHORTAGE;
-        else
-            state = StockState::SUFFICIENT;
-
-        int yieldPct;
-        if (needed == 0 && s.getStock() > 0)
-            yieldPct = 100;
-        else if (needed == 0)
-            yieldPct = 0;
-        else
-            yieldPct = s.getStock() * 100 / (s.getStock() + needed);
-
-        StockInfo info;
-        info.sampleName = s.getName();
-        info.stock      = s.getStock();
-        info.state      = state;
-        info.yieldPct   = yieldPct;
-        stockList.push_back(info);
-    }
+    auto orders    = orderRepo_.loadAll();
+    auto samples   = sampleRepo_.loadAll();
+    auto stockList = buildStockList(orders, samples);
 
     view_.showStockOnly(stockList);
 }
