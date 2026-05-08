@@ -6,12 +6,14 @@
 
 ## 개발 가이드
 
-### 아키텍처
-- **MVC 패턴** 적용: Model / Controller / View 패키지 구조와 역할 분리
+### 아키텍처 및 참조 프로젝트
 
-### 데이터
-- 데이터 영속성 처리: 파일, JSON, DB 등 자유롭게 선택
-- 애플리케이션 재실행 후에도 데이터 유지 필요
+| 항목 | 설명 | 참조 프로젝트 |
+|------|------|--------------|
+| MVC 패턴 | Model / Controller / View 패키지 구조와 역할 분리 | ConsoleMVC |
+| 데이터 영속성 | 파일, JSON, DB 등 자유롭게 선택. 애플리케이션 재실행 후에도 데이터 유지 필요 | DataPersistence |
+| 데이터 모니터링 툴 | 데이터 현황 모니터링 | DataMonitor |
+| Dummy 데이터 생성 툴 | 테스트용 더미 데이터 생성 | DummyDataGenerator |
 
 ### 개발 주안점
 1. CLAUDE.md, PRD.md 등의 문서 관리
