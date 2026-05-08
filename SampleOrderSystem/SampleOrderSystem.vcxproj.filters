@@ -79,7 +79,13 @@
     <ClCompile Include="view\SampleView.cpp">
       <Filter>소스 파일\view</Filter>
     </ClCompile>
+    <ClCompile Include="view\OrderView.cpp">
+      <Filter>소스 파일\view</Filter>
+    </ClCompile>
     <ClCompile Include="controller\SampleController.cpp">
+      <Filter>소스 파일\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\OrderController.cpp">
       <Filter>소스 파일\controller</Filter>
     </ClCompile>
     <ClCompile Include="tests\TestMain.cpp">
@@ -101,6 +107,9 @@
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
     <ClCompile Include="tests\SampleControllerTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\OrderControllerTest.cpp">
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
   </ItemGroup>
@@ -145,7 +154,13 @@
     <ClInclude Include="view\SampleView.h">
       <Filter>헤더 파일\view</Filter>
     </ClInclude>
+    <ClInclude Include="view\OrderView.h">
+      <Filter>헤더 파일\view</Filter>
+    </ClInclude>
     <ClInclude Include="controller\SampleController.h">
+      <Filter>헤더 파일\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\OrderController.h">
       <Filter>헤더 파일\controller</Filter>
     </ClInclude>
   </ItemGroup>

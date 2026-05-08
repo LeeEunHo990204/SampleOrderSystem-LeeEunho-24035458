@@ -155,7 +155,9 @@
     <ClCompile Include="util\JsonParser.cpp" />
     <ClCompile Include="view\ConsoleView.cpp" />
     <ClCompile Include="view\SampleView.cpp" />
+    <ClCompile Include="view\OrderView.cpp" />
     <ClCompile Include="controller\SampleController.cpp" />
+    <ClCompile Include="controller\OrderController.cpp" />
   </ItemGroup>
   <!-- Test source files: excluded in Release -->
   <ItemGroup>
@@ -187,6 +189,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="tests\OrderControllerTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <!-- Header files -->
   <ItemGroup>
@@ -203,7 +209,9 @@
     <ClInclude Include="util\DataPersistence.h" />
     <ClInclude Include="view\ConsoleView.h" />
     <ClInclude Include="view\SampleView.h" />
+    <ClInclude Include="view\OrderView.h" />
     <ClInclude Include="controller\SampleController.h" />
+    <ClInclude Include="controller\OrderController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

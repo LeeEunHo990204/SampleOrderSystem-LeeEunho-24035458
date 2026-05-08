@@ -111,7 +111,7 @@ void SampleView::showInlineMenu() {
 }
 
 std::string SampleView::inputId() {
-    return inputString(" 시료 ID (예: S-001): ");
+    return inputString(" 시료 ID: ");
 }
 
 std::string SampleView::inputName() {

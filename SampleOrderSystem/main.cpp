@@ -5,6 +5,8 @@
 #include "view/ConsoleView.h"
 #include "controller/SampleController.h"
 #include "view/SampleView.h"
+#include "controller/OrderController.h"
+#include "view/OrderView.h"
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -19,6 +21,7 @@ int main() {
     OrderRepository  orderRepo("data/orders.json");
     ConsoleView      view;
     SampleView       sampleView;
+    OrderView        orderView;
 
     bool running = true;
     while (running) {
@@ -42,8 +45,11 @@ int main() {
         } else if (choice == 1) {
             SampleController ctrl(sampleRepo, sampleView);
             ctrl.Run();
+        } else if (choice == 2) {
+            OrderController ctrl(sampleRepo, orderRepo, orderView);
+            ctrl.Run();
         } else {
-            // Phase 3~7: 각 Controller::Run() 으로 분기 예정
+            // Phase 4~7: 각 Controller::Run() 으로 분기 예정
             view.ShowMessage("해당 기능은 아직 구현 중입니다.");
         }
     }
