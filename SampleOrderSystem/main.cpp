@@ -12,6 +12,8 @@
 #include "view/ProductionView.h"
 #include "controller/ReleaseController.h"
 #include "view/ReleaseView.h"
+#include "controller/MonitorController.h"
+#include "view/MonitorView.h"
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -59,6 +61,10 @@ int main() {
             ctrl.runOrderCreation();
         } else if (choice == 3) {
             OrderController ctrl(sampleRepo, orderRepo, prodQueue, orderView);
+            ctrl.Run();
+        } else if (choice == 4) {
+            MonitorView monitorView;
+            MonitorController ctrl(sampleRepo, orderRepo, monitorView);
             ctrl.Run();
         } else if (choice == 5) {
             ProductionView prodView;

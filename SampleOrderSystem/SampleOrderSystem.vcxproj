@@ -163,6 +163,8 @@
     <ClCompile Include="controller\ReleaseController.cpp" />
     <ClCompile Include="model\ProductionQueue.cpp" />
     <ClCompile Include="view\ReleaseView.cpp" />
+    <ClCompile Include="view\MonitorView.cpp" />
+    <ClCompile Include="controller\MonitorController.cpp" />
   </ItemGroup>
   <!-- Test source files: excluded in Release -->
   <ItemGroup>
@@ -206,6 +208,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="tests\MonitorControllerTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <!-- Header files -->
   <ItemGroup>
@@ -230,6 +236,8 @@
     <ClInclude Include="controller\ReleaseController.h" />
     <ClInclude Include="model\ProductionQueue.h" />
     <ClInclude Include="view\ReleaseView.h" />
+    <ClInclude Include="view\MonitorView.h" />
+    <ClInclude Include="controller\MonitorController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

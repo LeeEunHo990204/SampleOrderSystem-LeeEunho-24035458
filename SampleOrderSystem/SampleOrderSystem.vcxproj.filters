@@ -103,6 +103,12 @@
     <ClCompile Include="view\ReleaseView.cpp">
       <Filter>소스 파일\view</Filter>
     </ClCompile>
+    <ClCompile Include="view\MonitorView.cpp">
+      <Filter>소스 파일\view</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\MonitorController.cpp">
+      <Filter>소스 파일\controller</Filter>
+    </ClCompile>
     <ClCompile Include="tests\TestMain.cpp">
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
@@ -131,6 +137,9 @@
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
     <ClCompile Include="tests\ReleaseControllerTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\MonitorControllerTest.cpp">
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
   </ItemGroup>
@@ -198,6 +207,12 @@
     </ClInclude>
     <ClInclude Include="view\ReleaseView.h">
       <Filter>헤더 파일\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\MonitorView.h">
+      <Filter>헤더 파일\view</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\MonitorController.h">
+      <Filter>헤더 파일\controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

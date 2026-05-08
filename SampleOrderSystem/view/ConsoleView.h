@@ -23,11 +23,13 @@ public:
     void printSeparator();
     void pause();
 
+protected:
+    static std::string currentDateTime();
+
 private:
     void printAsciiArt() const;
     void printStatusBar(const SystemStats& stats) const;
     void printMenu() const;
 
     static std::string formatNumber(int n);
-    static std::string currentDateTime();
 };
