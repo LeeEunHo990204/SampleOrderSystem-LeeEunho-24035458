@@ -3,7 +3,7 @@
 ## 1. 시스템 개요
 
 - **콘솔 기반** 동작: 담당자가 직접 명령을 입력하여 시료를 등록하고 주문을 처리
-- **생산 라인**: 공장에서 시료 하나를 생산하는 설비 흐름. 하나의 생산 라인은 시료를 하나씩 생산하며, 주문이 들어온 시료에 대해서만 생산
+- **생산 라인**: 공장에서 시료 하나를 생산하는 설비 흐름. 하나의 생산 라인은 시료를 하나씩 생산하며, 주문이 들어온 시료에 대해서만 생산. 핵심 공식 및 처리 흐름은 [생산 라인 명세](features/05-production-line.md)를 참고하세요.
 
 ### 시스템 처리 흐름도
 
@@ -65,30 +65,15 @@ REJECTED  재고 확인
 
 ---
 
-## 4. 메인 메뉴 구성
+## 4. 메인 메뉴 구성 및 기능 요구사항
 
-기능별 선택 화면을 표시하며, 전체 시료에 대한 요약 정보를 확인할 수 있습니다.
+기능별 선택 화면을 표시하며, 전체 시료에 대한 요약 정보를 확인할 수 있습니다. 각 기능의 상세 명세는 링크를 참고하세요.
 
-| 메뉴 | 기능 |
-|------|------|
-| [시료 관리](features/01-sample-management.md) | 시료 등록, 목록 조회, 이름 검색 |
-| [시료 주문](features/02-sample-order.md) | 고객 주문 접수 |
-| [주문 승인/거절](features/03-order-approval.md) | 생산 라인 담당자의 승인·거절 처리 |
-| [모니터링](features/04-monitoring.md) | 상태별 주문 수 및 시료별 재고 현황 |
-| [생산라인 조회](features/05-production-line.md) | 현재 생산 중인 시료 및 대기 중인 생산 큐 확인 |
-| [출고 처리](features/06-release-processing.md) | CONFIRMED 상태 주문에 대해 출고 실행 |
-
----
-
-## 5. 기능 요구사항
-
-각 기능의 상세 명세는 아래 링크를 참고하세요.
-
-| 기능 | 상세 명세 |
-|------|-----------|
-| 시료 관리 | [features/01-sample-management.md](features/01-sample-management.md) |
-| 시료 주문 | [features/02-sample-order.md](features/02-sample-order.md) |
-| 주문 승인/거절 | [features/03-order-approval.md](features/03-order-approval.md) |
-| 모니터링 | [features/04-monitoring.md](features/04-monitoring.md) |
-| 생산 라인 | [features/05-production-line.md](features/05-production-line.md) |
-| 출고 처리 | [features/06-release-processing.md](features/06-release-processing.md) |
+| 메뉴 | 기능 요약 | 상세 명세 |
+|------|-----------|-----------|
+| 시료 관리 | 시료 등록, 목록 조회, 이름 검색 | [01-sample-management.md](features/01-sample-management.md) |
+| 시료 주문 | 고객 주문 접수 | [02-sample-order.md](features/02-sample-order.md) |
+| 주문 승인/거절 | 생산 라인 담당자의 승인·거절 처리 | [03-order-approval.md](features/03-order-approval.md) |
+| 모니터링 | 상태별 주문 수 및 시료별 재고 현황 | [04-monitoring.md](features/04-monitoring.md) |
+| 생산라인 조회 | 현재 생산 중인 시료 및 대기 중인 생산 큐 확인 | [05-production-line.md](features/05-production-line.md) |
+| 출고 처리 | CONFIRMED 상태 주문에 대해 출고 실행 | [06-release-processing.md](features/06-release-processing.md) |

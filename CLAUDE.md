@@ -25,7 +25,14 @@
 
 ```
 SampleOrderSystem/
-├── CLAUDE.md        # 프로젝트 개발 가이드 (이 파일)
+├── CLAUDE.md                            # 프로젝트 개발 가이드 (이 파일)
 └── docs/
-    └── PRD.md       # 전체 요구사항 및 기능 명세
+    ├── PRD.md                           # 전체 요구사항 요약 및 기능 링크
+    └── features/
+        ├── 01-sample-management.md      # 시료 관리 상세 명세
+        ├── 02-sample-order.md           # 시료 주문 상세 명세
+        ├── 03-order-approval.md         # 주문 승인/거절 상세 명세
+        ├── 04-monitoring.md             # 모니터링 상세 명세
+        ├── 05-production-line.md        # 생산 라인 상세 명세
+        └── 06-release-processing.md     # 출고 처리 상세 명세
 ```
