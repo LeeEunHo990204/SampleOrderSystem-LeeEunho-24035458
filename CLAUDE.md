@@ -23,6 +23,37 @@
 
 ---
 
+## Phase 구현 절차
+
+각 Phase를 구현할 때는 아래 순서를 따릅니다.
+
+### 1단계 — 문서 충돌 확인 (`document-consistency-verify` agent)
+
+- md 파일 간 요구사항 충돌을 확인한다.
+- 충돌이 있을 경우 User에게 보여주고 User가 선택하게 한다.
+- 중복 내용은 한 군데에만 남도록 나머지를 삭제한다.
+
+### 2단계 — 코드 작성 (`ai-action` agent)
+
+- 해당 Phase의 코드를 작성한다.
+- `.claude/skills/test-driven-development/SKILL.md` skill을 사용한다 (TDD: Red → Green → Refactor).
+
+### 3단계 — 테스트 검증 (`test-verify` agent)
+
+- 전체 unit test 결과가 정상적으로 통과하는지 확인한다.
+- 실패한 테스트가 있을 경우 `ai-action` agent가 코드를 수정한다.
+
+### 4단계 — 요구사항 준수 확인 (`compliance-verify` agent)
+
+- PLAN.md 기준으로 현재 코드가 해당 Phase의 요구사항을 모두 만족하는지 확인한다.
+- 누락된 요구사항이 있을 경우 `ai-action` agent가 해당 코드를 추가한다.
+
+### 5단계 — Commit
+
+- User가 변경 내용을 확인하고 이상 없을 시 Commit한다.
+
+---
+
 ## 문서 구조
 
 ```
