@@ -1,4 +1,4 @@
-// OrderController.cpp — Phase 3 + Phase 4
+// OrderController.cpp — Phase 3 + Phase 4 + Phase 5
 #include "OrderController.h"
 #include <algorithm>
 #include <cmath>
@@ -30,8 +30,9 @@ static std::string generateOrderId(int existingCount) {
 // ---------------------------------------------------------------------------
 OrderController::OrderController(SampleRepository& sampleRepo,
                                  OrderRepository&  orderRepo,
+                                 ProductionQueue&  prodQueue,
                                  OrderView&        view)
-    : sampleRepo_(sampleRepo), orderRepo_(orderRepo), view_(view)
+    : sampleRepo_(sampleRepo), orderRepo_(orderRepo), prodQueue_(prodQueue), view_(view)
 {
 }
 
@@ -199,6 +200,8 @@ void OrderController::onApproveOrReject() {
             orderIt->setStatus(OrderStatus::CONFIRMED);
         } else {
             orderIt->setStatus(OrderStatus::PRODUCING);
+            orderIt->setProductionStartedAt(static_cast<long long>(std::time(nullptr)));
+            prodQueue_.push(orderIt->getId());
         }
         orderRepo_.saveAll(orders);
         view_.showApproveResult(*orderIt, orderIt->getStatus());

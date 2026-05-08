@@ -7,6 +7,7 @@
 #include "../model/Sample.h"
 #include "../model/Order.h"
 #include "../model/OrderStatus.h"
+#include "../model/ProductionQueue.h"
 #include <cstdio>
 #include <fstream>
 #include <string>
@@ -76,6 +77,7 @@ protected:
 
     SampleRepository sampleRepo_{ SAMPLE_TEST_FILE };
     OrderRepository  orderRepo_{ ORDER_TEST_FILE };
+    ProductionQueue  prodQueue_;
     StubOrderView    view_;
 };
 
@@ -93,7 +95,7 @@ TEST_F(OrderControllerTest, 주문_생성_시_RESERVED_상태로_저장된다) {
     view_.setInputQuantity(200);
     view_.setInputConfirm('Y');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.createOrder();
 
     auto orders = orderRepo_.loadAll();
@@ -114,7 +116,7 @@ TEST_F(OrderControllerTest, 존재하지_않는_시료_ID로_주문_실패) {
     view_.setInputQuantity(10);
     view_.setInputConfirm('Y');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.createOrder();
 
     auto orders = orderRepo_.loadAll();
@@ -135,7 +137,7 @@ TEST_F(OrderControllerTest, 수량_0_이하_입력_시_주문_미저장) {
     view_.setInputQuantity(0);
     view_.setInputConfirm('Y');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.createOrder();
 
     auto orders = orderRepo_.loadAll();
@@ -156,7 +158,7 @@ TEST_F(OrderControllerTest, 취소_입력_시_주문_미저장) {
     view_.setInputQuantity(200);
     view_.setInputConfirm('N');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.createOrder();
 
     auto orders = orderRepo_.loadAll();
@@ -180,7 +182,7 @@ TEST_F(OrderControllerTest, 재고_충분_시_V_승인_CONFIRMED_전환_및_재�
     view_.setInputListNo(1);
     view_.setInputConfirm('Y');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.approveOrRejectOrder();
 
     auto savedOrders = orderRepo_.loadAll();
@@ -209,12 +211,16 @@ TEST_F(OrderControllerTest, 재고_부족_V_입력_시_PRODUCING_전환) {
     view_.setInputListNo(1);
     view_.setInputConfirm('Y');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.approveOrRejectOrder();
 
     auto savedOrders = orderRepo_.loadAll();
     ASSERT_EQ(savedOrders.size(), 1u);
     EXPECT_EQ(savedOrders[0].getStatus(), OrderStatus::PRODUCING);
+
+    // ProductionQueue에 주문 ID가 push됐는지 확인
+    EXPECT_EQ(prodQueue_.size(), 1);
+    EXPECT_EQ(prodQueue_.front(), "ORD-20260508-0001");
 }
 
 // ---------------------------------------------------------------------------
@@ -234,7 +240,7 @@ TEST_F(OrderControllerTest, 재고_부족_N_입력_시_REJECTED_전환) {
     view_.setInputListNo(1);
     view_.setInputConfirm('N');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.approveOrRejectOrder();
 
     auto savedOrders = orderRepo_.loadAll();
@@ -259,7 +265,7 @@ TEST_F(OrderControllerTest, N_입력_시_재고_충분해도_REJECTED_전환) {
     view_.setInputListNo(1);
     view_.setInputConfirm('N');
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.approveOrRejectOrder();
 
     auto savedOrders = orderRepo_.loadAll();
@@ -284,7 +290,7 @@ TEST_F(OrderControllerTest, RESERVED_없을때_승인_시도_주문_저장_안�
 
     view_.setInputListNo(1);
 
-    OrderController ctrl(sampleRepo_, orderRepo_, view_);
+    OrderController ctrl(sampleRepo_, orderRepo_, prodQueue_, view_);
     ctrl.approveOrRejectOrder();
 
     auto savedOrders = orderRepo_.loadAll();

@@ -2,11 +2,14 @@
 #include "repository/SampleRepository.h"
 #include "repository/OrderRepository.h"
 #include "model/OrderStatus.h"
+#include "model/ProductionQueue.h"
 #include "view/ConsoleView.h"
 #include "controller/SampleController.h"
 #include "view/SampleView.h"
 #include "controller/OrderController.h"
 #include "view/OrderView.h"
+#include "controller/ProductionController.h"
+#include "view/ProductionView.h"
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -23,6 +26,12 @@ int main() {
     SampleView       sampleView;
     OrderView        orderView;
 
+    // ProductionQueue 생성 및 복원 (PRODUCING 상태 주문을 FIFO 순으로 push)
+    ProductionQueue prodQueue;
+    for (const auto& o : orderRepo.loadAll())
+        if (o.getStatus() == OrderStatus::PRODUCING)
+            prodQueue.push(o.getId());
+
     bool running = true;
     while (running) {
         auto samples = sampleRepo.loadAll();
@@ -32,9 +41,7 @@ int main() {
         stats.sampleCount = (int)samples.size();
         for (const auto& s : samples) stats.totalStock += s.getStock();
         stats.orderCount = (int)orders.size();
-        for (const auto& o : orders)
-            if (o.getStatus() == OrderStatus::PRODUCING)
-                stats.productionQueueCount++;
+        stats.productionQueueCount = prodQueue.size();
 
         view.Render(stats);
         int choice = view.GetMenuChoice();
@@ -46,13 +53,17 @@ int main() {
             SampleController ctrl(sampleRepo, sampleView);
             ctrl.Run();
         } else if (choice == 2) {
-            OrderController ctrl(sampleRepo, orderRepo, orderView);
+            OrderController ctrl(sampleRepo, orderRepo, prodQueue, orderView);
             ctrl.runOrderCreation();
         } else if (choice == 3) {
-            OrderController ctrl(sampleRepo, orderRepo, orderView);
+            OrderController ctrl(sampleRepo, orderRepo, prodQueue, orderView);
+            ctrl.Run();
+        } else if (choice == 5) {
+            ProductionView prodView;
+            ProductionController ctrl(sampleRepo, orderRepo, prodQueue, prodView);
             ctrl.Run();
         } else {
-            // Phase 5~7: 각 Controller::Run() 으로 분기 예정
+            // Phase 6~7: 각 Controller::Run() 으로 분기 예정
             view.ShowMessage("해당 기능은 아직 구현 중입니다.");
         }
     }

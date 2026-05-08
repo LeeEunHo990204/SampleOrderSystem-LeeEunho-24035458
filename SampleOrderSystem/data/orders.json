@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "customerName": "LG이노텍",
+    "id": "ORD-20260508-0001",
+    "producedQty": 0,
+    "productionStartedAt": 0,
+    "quantity": 100,
+    "sampleId": "S-001",
+    "status": "REJECTED"
+  },
+  {
+    "customerName": "삼성전자 파운드리",
+    "id": "ORD-20260508-0002",
+    "producedQty": 0,
+    "productionStartedAt": 1778222315,
+    "quantity": 100,
+    "sampleId": "S-001",
+    "status": "PRODUCING"
+  },
+  {
+    "customerName": "SK하이닉스",
+    "id": "ORD-20260508-0003",
+    "producedQty": 0,
+    "productionStartedAt": 0,
+    "quantity": 50,
+    "sampleId": "S-001",
+    "status": "PRODUCING"
+  },
+  {
+    "customerName": "현대오토에버",
+    "id": "ORD-20260508-0004",
+    "producedQty": 0,
+    "productionStartedAt": 0,
+    "quantity": 100,
+    "sampleId": "S-001",
+    "status": "RESERVED"
+  }
+]

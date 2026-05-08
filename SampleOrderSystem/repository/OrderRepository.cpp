@@ -42,16 +42,19 @@ Order OrderRepository::fromJson(const JsonValue& obj) const {
     Order order(id, sampleId, customerName, quantity);
     order.setStatus(status);
     order.setProducedQty(producedQty);
+    if (obj.contains("productionStartedAt"))
+        order.setProductionStartedAt(static_cast<long long>(obj["productionStartedAt"].getNumber()));
     return order;
 }
 
 JsonValue OrderRepository::toJson(const Order& o) const {
     JsonValue::Object obj;
-    obj["id"]           = JsonValue(o.getId());
-    obj["sampleId"]     = JsonValue(o.getSampleId());
-    obj["customerName"] = JsonValue(o.getCustomerName());
-    obj["quantity"]     = JsonValue(o.getQuantity());
-    obj["status"]       = JsonValue(toString(o.getStatus()));
-    obj["producedQty"]  = JsonValue(o.getProducedQty());
+    obj["id"]                   = JsonValue(o.getId());
+    obj["sampleId"]             = JsonValue(o.getSampleId());
+    obj["customerName"]         = JsonValue(o.getCustomerName());
+    obj["quantity"]             = JsonValue(o.getQuantity());
+    obj["status"]               = JsonValue(toString(o.getStatus()));
+    obj["producedQty"]          = JsonValue(o.getProducedQty());
+    obj["productionStartedAt"]  = JsonValue(static_cast<double>(o.getProductionStartedAt()));
     return JsonValue(obj);
 }

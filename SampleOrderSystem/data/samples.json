@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "avgProductionTime": 0.5,
+    "id": "S-001",
+    "name": "실리콘 웨이퍼-8인치",
+    "stock": 0,
+    "yieldRate": 0.92
+  }
+]

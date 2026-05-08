@@ -2,12 +2,14 @@
 #include "../core/IController.h"
 #include "../repository/SampleRepository.h"
 #include "../repository/OrderRepository.h"
+#include "../model/ProductionQueue.h"
 #include "../view/OrderView.h"
 
 class OrderController : public IController {
 public:
     OrderController(SampleRepository& sampleRepo,
                     OrderRepository&  orderRepo,
+                    ProductionQueue&  prodQueue,
                     OrderView&        view);
 
     // Phase 4: [3] 주문 승인/거절 루프
@@ -29,5 +31,6 @@ private:
 
     SampleRepository& sampleRepo_;
     OrderRepository&  orderRepo_;
+    ProductionQueue&  prodQueue_;
     OrderView&        view_;
 };

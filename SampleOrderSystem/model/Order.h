@@ -7,15 +7,17 @@ class Order {
 public:
     Order(std::string id, std::string sampleId, std::string customerName, int quantity);
 
-    const std::string& getId()           const;
-    const std::string& getSampleId()     const;
-    const std::string& getCustomerName() const;
-    int                getQuantity()     const;
-    OrderStatus        getStatus()       const;
-    int                getProducedQty()  const;
+    const std::string& getId()                   const;
+    const std::string& getSampleId()             const;
+    const std::string& getCustomerName()         const;
+    int                getQuantity()             const;
+    OrderStatus        getStatus()               const;
+    int                getProducedQty()          const;
+    long long          getProductionStartedAt()  const;
 
     void setStatus(OrderStatus status);
     void setProducedQty(int qty);
+    void setProductionStartedAt(long long t);
 
 private:
     std::string id_;
@@ -24,4 +26,5 @@ private:
     int         quantity_;
     OrderStatus status_;
     int         producedQty_;
+    long long   productionStartedAt_;
 };
