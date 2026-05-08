@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../repository/SampleRepository.h"
+#include "TestHelpers.h"
 #include <cstdio>
 #include <fstream>
 #include <string>
@@ -33,8 +34,8 @@ TEST_F(SampleRepositoryTest, 빈_배열_파일을_로드하면_빈_벡터를_반
 
 TEST_F(SampleRepositoryTest, saveAll_후_loadAll하면_동일한_데이터를_반환한다) {
     std::vector<Sample> samples = {
-        Sample("S001", "실리콘 웨이퍼", 2.5, 0.9, 100),
-        Sample("S002", "GaN 기판", 3.0, 0.85, 50)
+        makeSample("S001", "실리콘 웨이퍼", 2.5, 0.9, 100),
+        makeSample("S002", "GaN 기판", 3.0, 0.85, 50)
     };
 
     SampleRepository repo(TEST_SAMPLES_FILE);

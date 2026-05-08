@@ -238,6 +238,7 @@
     <ClInclude Include="view\ReleaseView.h" />
     <ClInclude Include="view\MonitorView.h" />
     <ClInclude Include="controller\MonitorController.h" />
+    <ClInclude Include="tests\TestHelpers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

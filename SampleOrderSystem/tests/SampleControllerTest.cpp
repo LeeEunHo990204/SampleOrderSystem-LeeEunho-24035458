@@ -3,6 +3,7 @@
 #include "../controller/SampleController.h"
 #include "../view/SampleView.h"
 #include "../repository/SampleRepository.h"
+#include "TestHelpers.h"
 #include <cstdio>
 #include <fstream>
 #include <string>
@@ -111,9 +112,9 @@ TEST_F(SampleControllerTest, 중복_ID_등록은_저장되지_않는다) {
 TEST_F(SampleControllerTest, 이름_검색_결과가_일치한다) {
     // 데이터 사전 준비
     std::vector<Sample> samples = {
-        Sample("S-001", "실리콘 웨이퍼", 2.5, 0.9, 10),
-        Sample("S-002", "GaN 기판",     3.0, 0.85, 5),
-        Sample("S-003", "실리콘 카바이드", 4.0, 0.8, 0)
+        makeSample("S-001", "실리콘 웨이퍼", 2.5, 0.9, 10),
+        makeSample("S-002", "GaN 기판",     3.0, 0.85, 5),
+        makeSample("S-003", "실리콘 카바이드", 4.0, 0.8, 0)
     };
     repo_.saveAll(samples);
 
@@ -134,7 +135,7 @@ TEST_F(SampleControllerTest, 이름_검색_결과가_일치한다) {
 // ---------------------------------------------------------------------------
 TEST_F(SampleControllerTest, 이름_검색_결과_없으면_빈_벡터) {
     std::vector<Sample> samples = {
-        Sample("S-001", "실리콘 웨이퍼", 2.5, 0.9, 10)
+        makeSample("S-001", "실리콘 웨이퍼", 2.5, 0.9, 10)
     };
     repo_.saveAll(samples);
 

@@ -7,6 +7,7 @@
 #include "../model/Sample.h"
 #include "../model/Order.h"
 #include "../model/OrderStatus.h"
+#include "TestHelpers.h"
 #include <cstdio>
 #include <fstream>
 #include <string>
@@ -64,12 +65,12 @@ protected:
 // ---------------------------------------------------------------------------
 TEST_F(ReleaseControllerTest, CONFIRMED_주문_출고_시_RELEASE_전환_및_releasedAt_설정) {
     std::vector<Sample> samples = {
-        Sample("S-001", "실리콘 웨이퍼-8인치", 3.0, 0.85, 500)
+        makeSample("S-001", "실리콘 웨이퍼-8인치", 3.0, 0.85, 500)
     };
     sampleRepo_.saveAll(samples);
 
     std::vector<Order> orders = {
-        Order("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
+        makeOrder("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
     };
     orders[0].setStatus(OrderStatus::CONFIRMED);
     orderRepo_.saveAll(orders);
@@ -90,7 +91,7 @@ TEST_F(ReleaseControllerTest, CONFIRMED_주문_출고_시_RELEASE_전환_및_rel
 // ---------------------------------------------------------------------------
 TEST_F(ReleaseControllerTest, CONFIRMED_없을_때_메시지_출력_후_상태_불변) {
     std::vector<Order> orders = {
-        Order("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
+        makeOrder("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
     };
     // RESERVED 상태 유지
     orderRepo_.saveAll(orders);
@@ -110,7 +111,7 @@ TEST_F(ReleaseControllerTest, CONFIRMED_없을_때_메시지_출력_후_상태_�
 // ---------------------------------------------------------------------------
 TEST_F(ReleaseControllerTest, 범위_밖_번호_입력_시_상태_불변_에러메시지) {
     std::vector<Order> orders = {
-        Order("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
+        makeOrder("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
     };
     orders[0].setStatus(OrderStatus::CONFIRMED);
     orderRepo_.saveAll(orders);
@@ -130,7 +131,7 @@ TEST_F(ReleaseControllerTest, 범위_밖_번호_입력_시_상태_불변_에러�
 // ---------------------------------------------------------------------------
 TEST_F(ReleaseControllerTest, listNo_0_입력_시_상태_불변) {
     std::vector<Order> orders = {
-        Order("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
+        makeOrder("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
     };
     orders[0].setStatus(OrderStatus::CONFIRMED);
     orderRepo_.saveAll(orders);
@@ -149,12 +150,12 @@ TEST_F(ReleaseControllerTest, listNo_0_입력_시_상태_불변) {
 // ---------------------------------------------------------------------------
 TEST_F(ReleaseControllerTest, releasedAt_형식이_YYYY_MM_DD_HH_MM_SS_이어야_한다) {
     std::vector<Sample> samples = {
-        Sample("S-001", "실리콘 웨이퍼-8인치", 3.0, 0.85, 500)
+        makeSample("S-001", "실리콘 웨이퍼-8인치", 3.0, 0.85, 500)
     };
     sampleRepo_.saveAll(samples);
 
     std::vector<Order> orders = {
-        Order("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
+        makeOrder("ORD-20260508-0001", "S-001", "SK하이닉스", 150)
     };
     orders[0].setStatus(OrderStatus::CONFIRMED);
     orderRepo_.saveAll(orders);

@@ -49,6 +49,9 @@
     <Filter Include="헤더 파일\controller">
       <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\tests">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000013}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -213,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="controller\MonitorController.h">
       <Filter>헤더 파일\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="tests\TestHelpers.h">
+      <Filter>헤더 파일\tests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
