@@ -1,3 +1,11 @@
 *.pdf
+*.png
 .vs/
 PLAN.md
+design/
+x64/
+Debug/
+Release/
+packages/
+*.45b4e01b/
+.claude/

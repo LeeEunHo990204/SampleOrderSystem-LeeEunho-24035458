@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="소스 파일">
@@ -13,5 +13,119 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\model">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\repository">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\util">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\view">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\tests">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\core">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\model">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\repository">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\util">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\view">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000010}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <!-- Source files -->
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Sample.cpp">
+      <Filter>소스 파일\model</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Order.cpp">
+      <Filter>소스 파일\model</Filter>
+    </ClCompile>
+    <ClCompile Include="repository\SampleRepository.cpp">
+      <Filter>소스 파일\repository</Filter>
+    </ClCompile>
+    <ClCompile Include="repository\OrderRepository.cpp">
+      <Filter>소스 파일\repository</Filter>
+    </ClCompile>
+    <ClCompile Include="util\JsonParser.cpp">
+      <Filter>소스 파일\util</Filter>
+    </ClCompile>
+    <ClCompile Include="view\ConsoleView.cpp">
+      <Filter>소스 파일\view</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\TestMain.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\OrderStatusTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\SampleTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\OrderTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\SampleRepositoryTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\OrderRepositoryTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <!-- Header files -->
+  <ItemGroup>
+    <ClInclude Include="core\IModel.h">
+      <Filter>헤더 파일\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\IView.h">
+      <Filter>헤더 파일\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\IController.h">
+      <Filter>헤더 파일\core</Filter>
+    </ClInclude>
+    <ClInclude Include="model\OrderStatus.h">
+      <Filter>헤더 파일\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Sample.h">
+      <Filter>헤더 파일\model</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Order.h">
+      <Filter>헤더 파일\model</Filter>
+    </ClInclude>
+    <ClInclude Include="repository\SampleRepository.h">
+      <Filter>헤더 파일\repository</Filter>
+    </ClInclude>
+    <ClInclude Include="repository\OrderRepository.h">
+      <Filter>헤더 파일\repository</Filter>
+    </ClInclude>
+    <ClInclude Include="util\JsonValue.h">
+      <Filter>헤더 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\JsonParser.h">
+      <Filter>헤더 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\DataPersistence.h">
+      <Filter>헤더 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="view\ConsoleView.h">
+      <Filter>헤더 파일\view</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
