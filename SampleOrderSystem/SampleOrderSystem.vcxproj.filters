@@ -43,6 +43,12 @@
     <Filter Include="헤더 파일\view">
       <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000010}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\controller">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\controller">
+      <UniqueIdentifier>{A1B2C3D4-1111-2222-3333-000000000012}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -70,6 +76,12 @@
     <ClCompile Include="view\ConsoleView.cpp">
       <Filter>소스 파일\view</Filter>
     </ClCompile>
+    <ClCompile Include="view\SampleView.cpp">
+      <Filter>소스 파일\view</Filter>
+    </ClCompile>
+    <ClCompile Include="controller\SampleController.cpp">
+      <Filter>소스 파일\controller</Filter>
+    </ClCompile>
     <ClCompile Include="tests\TestMain.cpp">
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
@@ -86,6 +98,9 @@
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
     <ClCompile Include="tests\OrderRepositoryTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\SampleControllerTest.cpp">
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,6 +141,12 @@
     </ClInclude>
     <ClInclude Include="view\ConsoleView.h">
       <Filter>헤더 파일\view</Filter>
+    </ClInclude>
+    <ClInclude Include="view\SampleView.h">
+      <Filter>헤더 파일\view</Filter>
+    </ClInclude>
+    <ClInclude Include="controller\SampleController.h">
+      <Filter>헤더 파일\controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
