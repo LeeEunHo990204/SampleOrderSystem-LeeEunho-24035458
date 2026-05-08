@@ -5,6 +5,7 @@
     "producedQty": 0,
     "productionStartedAt": 0,
     "quantity": 100,
+    "releasedAt": "",
     "sampleId": "S-001",
     "status": "REJECTED"
   },
@@ -14,6 +15,7 @@
     "producedQty": 0,
     "productionStartedAt": 1778222315,
     "quantity": 100,
+    "releasedAt": "",
     "sampleId": "S-001",
     "status": "PRODUCING"
   },
@@ -23,6 +25,7 @@
     "producedQty": 0,
     "productionStartedAt": 0,
     "quantity": 50,
+    "releasedAt": "",
     "sampleId": "S-001",
     "status": "PRODUCING"
   },
@@ -32,7 +35,28 @@
     "producedQty": 0,
     "productionStartedAt": 0,
     "quantity": 100,
+    "releasedAt": "",
     "sampleId": "S-001",
     "status": "RESERVED"
+  },
+  {
+    "customerName": "DB하이텍",
+    "id": "ORD-20260507-0001",
+    "producedQty": 121,
+    "productionStartedAt": 0,
+    "quantity": 150,
+    "releasedAt": "2026-05-08 16:15:36",
+    "sampleId": "S-001",
+    "status": "RELEASE"
+  },
+  {
+    "customerName": "키파운드리",
+    "id": "ORD-20260507-0002",
+    "producedQty": 0,
+    "productionStartedAt": 0,
+    "quantity": 200,
+    "releasedAt": "",
+    "sampleId": "S-001",
+    "status": "CONFIRMED"
   }
 ]

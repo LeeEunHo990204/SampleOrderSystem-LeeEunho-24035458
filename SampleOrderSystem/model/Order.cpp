@@ -8,6 +8,7 @@ Order::Order(std::string id, std::string sampleId, std::string customerName, int
     , status_(OrderStatus::RESERVED)
     , producedQty_(0)
     , productionStartedAt_(0)
+    , releasedAt_("")
 {
 }
 
@@ -31,4 +32,10 @@ void Order::setProducedQty(int qty) {
 
 void Order::setProductionStartedAt(long long t) {
     productionStartedAt_ = t;
+}
+
+const std::string& Order::getReleasedAt() const { return releasedAt_; }
+
+void Order::setReleasedAt(const std::string& dateTime) {
+    releasedAt_ = dateTime;
 }

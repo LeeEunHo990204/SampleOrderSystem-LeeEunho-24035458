@@ -14,10 +14,12 @@ public:
     OrderStatus        getStatus()               const;
     int                getProducedQty()          const;
     long long          getProductionStartedAt()  const;
+    const std::string& getReleasedAt()           const;
 
     void setStatus(OrderStatus status);
     void setProducedQty(int qty);
     void setProductionStartedAt(long long t);
+    void setReleasedAt(const std::string& dateTime);
 
 private:
     std::string id_;
@@ -27,4 +29,5 @@ private:
     OrderStatus status_;
     int         producedQty_;
     long long   productionStartedAt_;
+    std::string releasedAt_;
 };

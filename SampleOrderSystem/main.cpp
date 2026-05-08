@@ -10,6 +10,8 @@
 #include "view/OrderView.h"
 #include "controller/ProductionController.h"
 #include "view/ProductionView.h"
+#include "controller/ReleaseController.h"
+#include "view/ReleaseView.h"
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -62,8 +64,11 @@ int main() {
             ProductionView prodView;
             ProductionController ctrl(sampleRepo, orderRepo, prodQueue, prodView);
             ctrl.Run();
+        } else if (choice == 6) {
+            ReleaseView releaseView;
+            ReleaseController ctrl(orderRepo, sampleRepo, releaseView);
+            ctrl.Run();
         } else {
-            // Phase 6~7: 각 Controller::Run() 으로 분기 예정
             view.ShowMessage("해당 기능은 아직 구현 중입니다.");
         }
     }

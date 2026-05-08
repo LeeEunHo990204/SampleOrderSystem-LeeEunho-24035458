@@ -94,8 +94,14 @@
     <ClCompile Include="controller\ProductionController.cpp">
       <Filter>소스 파일\controller</Filter>
     </ClCompile>
+    <ClCompile Include="controller\ReleaseController.cpp">
+      <Filter>소스 파일\controller</Filter>
+    </ClCompile>
     <ClCompile Include="model\ProductionQueue.cpp">
       <Filter>소스 파일\model</Filter>
+    </ClCompile>
+    <ClCompile Include="view\ReleaseView.cpp">
+      <Filter>소스 파일\view</Filter>
     </ClCompile>
     <ClCompile Include="tests\TestMain.cpp">
       <Filter>소스 파일\tests</Filter>
@@ -122,6 +128,9 @@
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
     <ClCompile Include="tests\ProductionControllerTest.cpp">
+      <Filter>소스 파일\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\ReleaseControllerTest.cpp">
       <Filter>소스 파일\tests</Filter>
     </ClCompile>
   </ItemGroup>
@@ -181,8 +190,14 @@
     <ClInclude Include="controller\ProductionController.h">
       <Filter>헤더 파일\controller</Filter>
     </ClInclude>
+    <ClInclude Include="controller\ReleaseController.h">
+      <Filter>헤더 파일\controller</Filter>
+    </ClInclude>
     <ClInclude Include="model\ProductionQueue.h">
       <Filter>헤더 파일\model</Filter>
+    </ClInclude>
+    <ClInclude Include="view\ReleaseView.h">
+      <Filter>헤더 파일\view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
